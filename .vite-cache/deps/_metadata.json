@@ -1,0 +1,35 @@
+{
+  "hash": "ee6e009d",
+  "browserHash": "c3a36b29",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "69dd2f47",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "87c072e9",
+      "needsInterop": true
+    },
+    "@maxhub/max-ui": {
+      "src": "../../node_modules/@maxhub/max-ui/dist/index.js",
+      "file": "@maxhub_max-ui.js",
+      "fileHash": "531ca036",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "22596952",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-Q34MU4L5": {
+      "file": "chunk-Q34MU4L5.js"
+    }
+  }
+}
