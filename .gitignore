@@ -34,3 +34,6 @@ dist-ssr/
 # Системные файлы
 .DS_Store
 Thumbs.db
+# SSH ключи
+gitssh
+gitssh.pub
