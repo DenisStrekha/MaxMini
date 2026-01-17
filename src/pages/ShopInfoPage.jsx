@@ -2,11 +2,8 @@ import React from 'react';
 import { Container, Flex } from '@maxhub/max-ui';
 import MenuButton from '../components/MenuButton';
 import BackButton from '../components/BackButton';
-import { useNavigation } from '../contexts/NavigationContext';
 
-const ShopInfoPage = () => {
-  const { navigate } = useNavigation();
-
+const ShopInfoPage = ({ navigate, goBack }) => {
   const menuItems = [
     { id: 'about', title: '📖 О НАС', subtitle: 'О нашей компании', icon: '📖' },
     { id: 'purchaseTerms', title: '📝 УСЛОВИЯ ЗАКУПКИ', subtitle: 'Правила и условия', icon: '📝' },
@@ -27,7 +24,7 @@ const ShopInfoPage = () => {
             showArrow={true}
           />
         ))}
-        <BackButton />
+        <BackButton onClick={goBack} />
       </Flex>
     </Container>
   );

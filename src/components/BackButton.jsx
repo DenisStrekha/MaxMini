@@ -1,16 +1,13 @@
 import React from 'react';
 import { Button } from '@maxhub/max-ui';
-import { useNavigation } from '../contexts/NavigationContext';
 
-const BackButton = ({ style }) => {
-  const { goBack, canGoBack } = useNavigation();
-
-  if (!canGoBack) return null;
+const BackButton = ({ onClick, style, show = true }) => {
+  if (!show) return null;
 
   return (
     <Button
       mode="tertiary"
-      onClick={goBack}
+      onClick={onClick}
       style={{
         marginTop: 20,
         ...style
@@ -19,6 +16,10 @@ const BackButton = ({ style }) => {
       ← Назад
     </Button>
   );
+};
+
+BackButton.defaultProps = {
+  show: true
 };
 
 export default BackButton;

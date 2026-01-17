@@ -1,14 +1,12 @@
+// src/pages/PersonalAccountPage.jsx
 import React from 'react';
 import { Container, Flex } from '@maxhub/max-ui';
 import MenuButton from '../components/MenuButton';
 import BackButton from '../components/BackButton';
-import { useNavigation } from '../contexts/NavigationContext';
 
-const PersonalAccountPage = () => {
-  const { navigate } = useNavigation();
-
+const PersonalAccountPage = ({ navigate, goBack }) => {
   const menuItems = [
-    { id: 'balance', title: '💰 ВАШ БАЛАНС', subtitle: 'Текущий баланс: 0 ₽', icon: '💰' },
+    { id: 'balance', title: '💰 ВАШ БАЛАНС', subtitle: 'Текущий баланс', icon: '💰' },
     { id: 'profile', title: '👤 ПРОФИЛЬ', subtitle: 'Личные данные', icon: '👤' },
     { id: 'changePassword', title: '🔐 СМЕНИТЬ ПАРОЛЬ', subtitle: 'Обновить пароль', icon: '🔐' },
   ];
@@ -26,7 +24,7 @@ const PersonalAccountPage = () => {
             showArrow={true}
           />
         ))}
-        <BackButton />
+        <BackButton onClick={goBack} />
       </Flex>
     </Container>
   );

@@ -1,10 +1,7 @@
 import React from 'react';
 import { Container, Flex, Typography, Avatar } from '@maxhub/max-ui';
-import { useNavigation } from '../contexts/NavigationContext';
 
-const Header = () => {
-  const { currentPage } = useNavigation();
-
+const Header = ({ currentPage = 'main' }) => {
   const getPageTitle = () => {
     switch (currentPage) {
       case 'main': return 'Мой магазин';
@@ -26,14 +23,23 @@ const Header = () => {
       case 'main': return 'Добро пожаловать в мини-приложение для MAX';
       case 'shopInfo': return 'Выберите интересующий раздел';
       case 'personalAccount': return 'Управление вашим аккаунтом';
+      case 'about': return 'Информация о нашей компании';
+      case 'purchaseTerms': return 'Правила и условия закупки';
+      case 'delivery': return 'Способы и сроки доставки';
+      case 'schedule': return 'Расписание работы и закупок';
+      case 'balance': return 'Текущий баланс и история операций';
+      case 'profile': return 'Личные данные и настройки';
+      case 'changePassword': return 'Изменение пароля для входа';
       default: return '';
     }
   };
 
+  const showAvatar = currentPage === 'main';
+
   return (
     <Container style={{ marginBottom: 32 }}>
       <Flex direction="column" align="center" gap={12}>
-        {currentPage === 'main' && (
+        {showAvatar && (
           <Avatar.Container size={80} form="squircle">
             <Avatar.Image src="https://sun9-21.userapi.com/1N-rJz6-7hoTDW7MhpWe19e_R_TdGV6Wu5ZC0A/67o6-apnAks.jpg" />
           </Avatar.Container>
@@ -44,7 +50,7 @@ const Header = () => {
         {getPageSubtitle() && (
           <Typography.Body 
             type="secondary" 
-            style={{ textAlign: 'center', color: '#666' }}
+            style={{ textAlign: 'center', color: '#666', fontSize: 14 }}
           >
             {getPageSubtitle()}
           </Typography.Body>

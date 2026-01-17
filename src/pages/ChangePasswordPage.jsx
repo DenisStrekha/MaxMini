@@ -1,33 +1,93 @@
+// src/pages/ChangePasswordPage.jsx (полный код)
 import React, { useState } from 'react';
 import { Container, Flex, Typography, Button, Input } from '@maxhub/max-ui';
 import BackButton from '../components/BackButton';
-import PageTitle from '../components/PageTitle';
 
-const ChangePasswordPage = () => {
+const ChangePasswordPage = ({ goBack }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = () => {
-    if (newPassword !== confirmPassword) {
-      alert('Новые пароли не совпадают');
+  const validate = () => {
+    const newErrors = {};
+    
+    if (!currentPassword) {
+      newErrors.currentPassword = 'Введите текущий пароль';
+    }
+    
+    if (!newPassword) {
+      newErrors.newPassword = 'Введите новый пароль';
+    } else if (newPassword.length < 8) {
+      newErrors.newPassword = 'Пароль должен быть не менее 8 символов';
+    }
+    
+    if (!confirmPassword) {
+      newErrors.confirmPassword = 'Подтвердите новый пароль';
+    } else if (newPassword !== confirmPassword) {
+      newErrors.confirmPassword = 'Пароли не совпадают';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!validate()) {
       return;
     }
-    alert('Пароль успешно изменен!');
-    // Здесь будет API запрос
+    
+    setIsSubmitting(true);
+    
+    // Имитация запроса к API
+    setTimeout(() => {
+      console.log('Changing password:', { currentPassword, newPassword });
+      setIsSubmitting(false);
+      setSuccess(true);
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setErrors({});
+      
+      // Сбросить успешное сообщение через 3 секунды
+      setTimeout(() => setSuccess(false), 3000);
+    }, 1000);
+  };
+
+  const handleReset = () => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setErrors({});
+    setSuccess(false);
   };
 
   return (
     <Container>
-      <PageTitle>Смена пароля</PageTitle>
+      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
+        Смена пароля
+      </Typography.Title>
       
-      <Typography.Body style={{ marginBottom: 24, lineHeight: 1.6 }}>
-        Для смены пароля заполните все поля ниже. 
-        Пароль должен содержать не менее 8 символов, включая буквы и цифры.
-      </Typography.Body>
+      {success && (
+        <div style={{ 
+          backgroundColor: '#d1fae5',
+          border: '1px solid #10b981',
+          borderRadius: 8,
+          padding: 16,
+          marginBottom: 24
+        }}>
+          <Typography.Body style={{ color: '#065f46', textAlign: 'center' }}>
+            ✅ Пароль успешно изменен!
+          </Typography.Body>
+        </div>
+      )}
       
-      <Flex direction="column" gap={16} style={{ marginBottom: 32 }}>
-        <div>
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: 24 }}>
           <Typography.Label style={{ marginBottom: 8, display: 'block' }}>
             Текущий пароль
           </Typography.Label>
@@ -37,10 +97,16 @@ const ChangePasswordPage = () => {
             onChange={(e) => setCurrentPassword(e.target.value)}
             placeholder="Введите текущий пароль"
             style={{ width: '100%' }}
+            error={errors.currentPassword}
           />
+          {errors.currentPassword && (
+            <Typography.Label style={{ color: '#ef4444', fontSize: 12, marginTop: 4 }}>
+              {errors.currentPassword}
+            </Typography.Label>
+          )}
         </div>
         
-        <div>
+        <div style={{ marginBottom: 24 }}>
           <Typography.Label style={{ marginBottom: 8, display: 'block' }}>
             Новый пароль
           </Typography.Label>
@@ -48,14 +114,20 @@ const ChangePasswordPage = () => {
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Введите новый пароль"
+            placeholder="Не менее 8 символов"
             style={{ width: '100%' }}
+            error={errors.newPassword}
           />
+          {errors.newPassword && (
+            <Typography.Label style={{ color: '#ef4444', fontSize: 12, marginTop: 4 }}>
+              {errors.newPassword}
+            </Typography.Label>
+          )}
         </div>
         
-        <div>
+        <div style={{ marginBottom: 32 }}>
           <Typography.Label style={{ marginBottom: 8, display: 'block' }}>
-            Подтвердите новый пароль
+            Подтверждение нового пароля
           </Typography.Label>
           <Input
             type="password"
@@ -63,37 +135,59 @@ const ChangePasswordPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Повторите новый пароль"
             style={{ width: '100%' }}
+            error={errors.confirmPassword}
           />
+          {errors.confirmPassword && (
+            <Typography.Label style={{ color: '#ef4444', fontSize: 12, marginTop: 4 }}>
+              {errors.confirmPassword}
+            </Typography.Label>
+          )}
         </div>
-      </Flex>
-      
-      <Flex gap={12} style={{ marginBottom: 24 }}>
-        <Button mode="primary" onClick={handleSubmit} stretched>
-          Сохранить изменения
-        </Button>
-        <Button mode="tertiary" onClick={() => {
-          setCurrentPassword('');
-          setNewPassword('');
-          setConfirmPassword('');
-        }}>
-          Очистить
-        </Button>
-      </Flex>
+        
+        <Flex gap={12} style={{ marginBottom: 24 }}>
+          <Button 
+            type="submit"
+            mode="primary" 
+            stretched
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Смена пароля...' : 'Сменить пароль'}
+          </Button>
+          <Button 
+            mode="tertiary" 
+            onClick={handleReset}
+            disabled={isSubmitting}
+          >
+            Сбросить
+          </Button>
+        </Flex>
+      </form>
       
       <div style={{ 
-        backgroundColor: '#f0f9ff',
-        border: '1px solid #bae6fd',
+        backgroundColor: '#fef3c7',
+        border: '1px solid #fcd34d',
         borderRadius: 8,
         padding: 16,
         marginBottom: 24
       }}>
-        <Typography.Body style={{ fontSize: 14, color: '#0369a1' }}>
-          🔒 <strong>Безопасность:</strong> Не используйте простые пароли. 
-          Рекомендуем менять пароль каждые 3 месяца.
+        <Typography.Body style={{ fontSize: 14, color: '#92400e' }}>
+          🔒 <strong>Требования к паролю:</strong>
         </Typography.Body>
+        <ul style={{ 
+          marginLeft: 20, 
+          marginTop: 8,
+          fontSize: 13,
+          color: '#92400e',
+          lineHeight: 1.5
+        }}>
+          <li>Не менее 8 символов</li>
+          <li>Рекомендуется использовать буквы, цифры и специальные символы</li>
+          <li>Не используйте простые пароли (123456, qwerty и т.д.)</li>
+        </ul>
       </div>
       
-      <BackButton />
+      <BackButton onClick={goBack} />
     </Container>
   );
 };

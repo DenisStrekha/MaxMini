@@ -1,11 +1,8 @@
 import React from 'react';
 import { Container, Flex } from '@maxhub/max-ui';
 import MenuButton from '../components/MenuButton';
-import { useNavigation } from '../contexts/NavigationContext';
 
-const MainPage = () => {
-  const { navigate } = useNavigation();
-
+const MainPage = ({ navigate }) => {
   const menuItems = [
     { 
       id: 'shopInfo', 

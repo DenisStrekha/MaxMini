@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container, Typography } from '@maxhub/max-ui';
 import BackButton from '../components/BackButton';
-import PageTitle from '../components/PageTitle';
 
-const SchedulePage = () => {
+const SchedulePage = ({ goBack }) => {
   const schedule = [
     { day: 'Понедельник', time: '9:00 - 20:00', note: 'Прием заказов до 18:00' },
     { day: 'Вторник', time: '9:00 - 20:00', note: 'Прием заказов до 18:00' },
@@ -16,7 +15,9 @@ const SchedulePage = () => {
 
   return (
     <Container>
-      <PageTitle>График работы и закупки</PageTitle>
+      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
+        График работы и закупки
+      </Typography.Title>
       
       <Typography.Body style={{ marginBottom: 16, lineHeight: 1.6 }}>
         <strong>🕒 График работы магазина:</strong>
@@ -66,7 +67,20 @@ const SchedulePage = () => {
         обрабатываются на следующий рабочий день.
       </Typography.Body>
       
-      <BackButton />
+      <div style={{ 
+        backgroundColor: '#fef3c7',
+        border: '1px solid #fcd34d',
+        borderRadius: 8,
+        padding: 16,
+        marginBottom: 24
+      }}>
+        <Typography.Body style={{ fontSize: 14, color: '#92400e' }}>
+          📢 <strong>Важно:</strong> В праздничные дни график может меняться. 
+          Следите за обновлениями в чате магазина.
+        </Typography.Body>
+      </div>
+      
+      <BackButton onClick={goBack} />
     </Container>
   );
 };

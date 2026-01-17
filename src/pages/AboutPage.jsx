@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container, Typography } from '@maxhub/max-ui';
 import BackButton from '../components/BackButton';
-import PageTitle from '../components/PageTitle';
 
-const AboutPage = () => {
+const AboutPage = ({ goBack }) => {
   return (
     <Container>
-      <PageTitle>О нашей компании</PageTitle>
+      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
+        О нашей компании
+      </Typography.Title>
       
       <Typography.Body style={{ marginBottom: 16, lineHeight: 1.6 }}>
         Мы — современный магазин, работающий в мессенджере MAX, предлагающий 
@@ -34,7 +35,22 @@ const AboutPage = () => {
         <li style={{ marginBottom: 8 }}>✅ Удобная оплата через MAX</li>
       </ul>
       
-      <BackButton />
+      <div style={{ 
+        backgroundColor: '#f0f9ff',
+        border: '1px solid #bae6fd',
+        borderRadius: 8,
+        padding: 16,
+        marginBottom: 24
+      }}>
+        <Typography.Body style={{ fontSize: 14, color: '#0369a1' }}>
+          📞 <strong>Контактная информация:</strong><br/>
+          Телефон: +7 (999) 123-45-67<br/>
+          Email: info@example.com<br/>
+          Адрес: г. Москва, ул. Примерная, д. 10
+        </Typography.Body>
+      </div>
+      
+      <BackButton onClick={goBack} />
     </Container>
   );
 };

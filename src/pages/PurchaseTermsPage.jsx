@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container, Typography } from '@maxhub/max-ui';
 import BackButton from '../components/BackButton';
-import PageTitle from '../components/PageTitle';
 
-const PurchaseTermsPage = () => {
+const PurchaseTermsPage = ({ goBack }) => {
   return (
     <Container>
-      <PageTitle>Условия закупки</PageTitle>
+      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: 24 }}>
+        Условия закупки
+      </Typography.Title>
       
       <Typography.Body style={{ marginBottom: 16, lineHeight: 1.6 }}>
         <strong>1. Порядок оформления заказа:</strong>
@@ -38,7 +39,20 @@ const PurchaseTermsPage = () => {
         при сохранении товарного вида и упаковки.
       </Typography.Body>
       
-      <BackButton />
+      <div style={{ 
+        backgroundColor: '#fef3c7',
+        border: '1px solid #fcd34d',
+        borderRadius: 8,
+        padding: 16,
+        marginBottom: 24
+      }}>
+        <Typography.Body style={{ fontSize: 14, color: '#92400e' }}>
+          ⚠️ <strong>Важно:</strong> Заказы принимаются только от совершеннолетних лиц.
+          Все товары проходят предпродажную проверку.
+        </Typography.Body>
+      </div>
+      
+      <BackButton onClick={goBack} />
     </Container>
   );
 };
